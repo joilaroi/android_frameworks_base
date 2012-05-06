@@ -1147,6 +1147,9 @@ bool CameraService::Client::recordingEnabled() {
 }
 
 status_t CameraService::Client::autoFocus() {
+  // disable auto focus for u81xx devices
+  notifyCallback(CAMERA_MSG_FOCUS, 1, 0, 0);
+  return NO_ERROR;
     LOG1("autoFocus (pid %d)", getCallingPid());
 
     Mutex::Autolock lock(mLock);
@@ -1157,6 +1160,8 @@ status_t CameraService::Client::autoFocus() {
 }
 
 status_t CameraService::Client::cancelAutoFocus() {
+  // disable auto focus for u81xx devices
+  return NO_ERROR;
     LOG1("cancelAutoFocus (pid %d)", getCallingPid());
 
     Mutex::Autolock lock(mLock);
@@ -1931,3 +1936,4 @@ extern "C" void HAL_getCameraInfo(int cameraId, struct CameraInfo* cameraInfo)
 }
 #endif
 }; // namespace android
+
